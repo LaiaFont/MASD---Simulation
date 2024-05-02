@@ -1,3 +1,7 @@
-launchpolicy{
+define citizenAgent as agent {
+	use builder as main module.
+}
 
+launchpolicy{
+	launch citizenAgent.
 }
