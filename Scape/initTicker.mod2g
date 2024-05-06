@@ -1,0 +1,5 @@
+use tickKn as knowledge.
+
+module initTicker {
+	if true then insert(no_timer).
+}

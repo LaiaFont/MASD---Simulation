@@ -1,0 +1,21 @@
+use kn as knowledge.
+
+exit=nogoals.
+
+module scapist {
+	if 
+		goal(scape), bel(my_place(E), exit(E)) 
+	then 
+		drop(scape).
+			
+	if 
+		goal(scape), bel(my_place(X), path_to_exit([X, N| _]))
+	then 
+		insert(going(X, N)).
+	
+	if 
+		goal(scape)
+	then 
+		print("Scaping!").
+		
+}

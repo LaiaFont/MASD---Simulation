@@ -1,0 +1,7 @@
+use scapeGoal as goals.
+use map as beliefs.
+use kn as knowledge.
+
+module initScapist {
+	if true	then insert(my_place(kitchen)).
+}

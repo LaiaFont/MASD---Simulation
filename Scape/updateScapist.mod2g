@@ -1,0 +1,13 @@
+use kn as knowledge.
+
+module updateScapist {
+	if 
+		bel(going(X, Y))
+	then
+		delete(going(X, Y)) + delete(my_place(X)) + insert(my_place(Y)).
+		
+	if 
+		bel( tick(Count), NewCount is Count+1 )
+	then 
+		delete( tick(Count) ) + insert( tick(NewCount) ).
+}

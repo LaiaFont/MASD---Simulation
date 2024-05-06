@@ -1,0 +1,16 @@
+define tickerAgent as agent {
+	use initTicker as init module.
+	use ticker as main module.
+	use updateTicker as event module.
+}
+
+define scapistAgent as agent {
+	use initScapist as init module.
+	use scapist as main module.
+	use updateScapist as event module.
+}
+
+launchpolicy {
+   launch scapistAgent.
+   launch tickerAgent.
+}

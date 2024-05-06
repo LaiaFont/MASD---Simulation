@@ -1,0 +1,8 @@
+use tickKn as knowledge.
+
+module updateTicker {
+	if 
+		percept(timer(ticker, _)) 
+	then 
+		print("Timer timeout!") + insert(no_timer).
+}
