@@ -1,5 +1,0 @@
-use map as knowledge.
-
-define go(From, To) with
-	pre { my_place(From), connected(From, To)}
-	post { not(my_place(From)), my_place(To)}
