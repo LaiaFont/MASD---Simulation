@@ -1,0 +1,13 @@
+use common as knowledge.
+use printText as actionspec.
+use adultGoals as goals.
+use mapState as beliefs.
+
+module adultInit {
+	if 
+		true
+	then
+		subscribe(tickChannel)
+		+ subscribe(emergencyChannel)
+		. 
+}

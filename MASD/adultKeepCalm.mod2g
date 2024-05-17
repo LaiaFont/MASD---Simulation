@@ -1,0 +1,14 @@
+use  common as knowledge.
+use printText as actionspec.
+
+focus=select.
+exit=nogoals.
+
+module adultKeepCalm {
+	if
+		bel(tick)
+	then
+		delete(tick)
+		+ printText("Quietly reading"). 
+		%%+insert(keep_calm).
+}

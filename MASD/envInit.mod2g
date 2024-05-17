@@ -1,0 +1,13 @@
+use map as knowledge.
+use mapState as beliefs.
+use envKnowledge as knowledge.
+use envBeliefs as beliefs.
+
+module envInit {
+	if 
+		true
+	then
+		subscribe(tickChannel) 
+		%+ insert(ping)
+		.
+}

@@ -1,0 +1,13 @@
+use tickerKnowledge as knowledge.
+
+exit=never.
+
+module ticker {
+	if 
+		bel(no_timer), bel(timeout(T)) 
+	then 
+		%print("timer") 
+		delete(no_timer) 
+		+ starttimer(ticker, T, T).
+		
+}

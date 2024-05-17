@@ -1,0 +1,21 @@
+use envKnowledge as knowledge.
+use printText as actionspec.
+
+module envUpdate {
+	if 
+		(_).sent(tick)  
+	then {
+		if bel(curr_tick(C), N is C + 1)
+		then {
+			if true then delete(curr_tick(C)) + insert(curr_tick(N)).
+			%if bel(fire(_, N)) then printText("In tick out").
+			forall bel( fire(R, C)) do printText("Fire in...") + printText(R) + delete(status(R, clear)) + insert(status(R, fire)).
+			if bel(fire_alarm(C)) then printText("Emergency!!") + (emergencyChannel).send(emergency_alarm).
+		}
+	}
+		
+	if
+		(Ag).sent(query_status(R)), bel(status(R, S))
+	then
+		(Ag).send(status(R, S)).
+}

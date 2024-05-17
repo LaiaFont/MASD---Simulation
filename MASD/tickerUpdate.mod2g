@@ -1,0 +1,25 @@
+use tickerKnowledge as knowledge.
+use printText as actionspec.
+
+module tickerUpdate {
+%	if 
+%		percept(timer(ticker, _)), bel(set_position(Ag, Pos))
+%	then 
+%		printText("Send position") + (Ag).send(my_place(Pos)) + delete(set_position(Ag, Pos)).
+	
+	if 
+		percept(timer(ticker, _)), 
+		bel(not_initialized) 
+	then {
+		forall bel( initial_place(Ag, Loc)) do (Ag).send(initial_place(Loc))
+		+ delete(not_initialized)
+		.
+	}
+	
+	if 
+		percept(timer(ticker, _)) 
+	then 
+		%printText("==> Tick!") + 
+		(tickChannel).send(tick) 
+		+ insert(no_timer).
+}

@@ -1,0 +1,36 @@
+use common as knowledge.
+use map as knowledge.
+use printText as actionspec.
+
+focus=select.
+exit=nogoals.
+
+module adultScape {
+	if 
+		bel(my_place(E), exit(E)) 
+	then 
+		printText("Exit found. Bye!") +
+		print("Exit found. Bye!") + 
+		drop(scape).
+			
+	if 
+		not(bel(going(_,_))), bel(my_place(X), path_to_exit([X, N| _]))
+	then 
+		print("Going to") + print(N) + 
+		%(env).send(leaving(adult, X)) +
+		insert(query_status(N)) +
+		insert(going(X, N)).
+
+	if 
+		bel(tick),  
+		bel(going(X, Y))
+	then
+		delete(tick)
+		+ delete(going(X, Y)) 
+		+ delete(my_place(X)) 
+		+ printText(Y)
+		+ insert(my_place(Y))
+		%+ (env).send(entering(adult, Y)).	
+		. 
+	
+}

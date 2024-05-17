@@ -1,0 +1,23 @@
+use common as knowledge.
+use printText as actionspec.
+use adultKeepCalm as module.
+use adultScape as module.
+
+exit=nogoals.
+
+module adult {
+
+	if 
+		goal(scape)
+	then
+		adultScape.
+				
+	if
+		goal(keep_calm) %, bel(tick)
+	then
+		adultKeepCalm.
+		%delete(tick)
+		%+ printText("Quietly reading"). 
+		%%+insert(keep_calm).
+				
+}
