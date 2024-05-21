@@ -6,9 +6,8 @@ exit=nogoals.
 
 module adultKeepCalm {
 	if
-		bel(tick)
+		bel(tick, my_name(N), concat_strings(N, "Quietly ", "reading!!!", M))
 	then
 		delete(tick)
-		+ printText("Quietly reading"). 
-		%%+insert(keep_calm).
+		+ printText(M).
 }

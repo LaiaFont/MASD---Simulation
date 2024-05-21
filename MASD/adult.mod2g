@@ -8,8 +8,10 @@ exit=nogoals.
 module adult {
 
 	if 
-		goal(scape)
+		goal(scape), bel(my_status(S))
 	then
+		delete(my_status(S)) +
+		insert(my_status(scaping)) +
 		adultScape.
 				
 	if

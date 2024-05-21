@@ -11,7 +11,7 @@ module tickerUpdate {
 		percept(timer(ticker, _)), 
 		bel(not_initialized) 
 	then {
-		forall bel( initial_place(Ag, Loc)) do (Ag).send(initial_place(Loc))
+		forall bel( initial_place(Ag, Loc)) do (Ag).send(initial_place(Ag, Loc))
 		+ delete(not_initialized)
 		.
 	}
@@ -19,7 +19,7 @@ module tickerUpdate {
 	if 
 		percept(timer(ticker, _)) 
 	then 
-		%printText("==> Tick!") + 
+		printText("==> Tick!") + 
 		(tickChannel).send(tick) 
 		+ insert(no_timer).
 }

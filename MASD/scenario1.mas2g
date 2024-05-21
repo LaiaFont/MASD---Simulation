@@ -6,6 +6,12 @@ define adultAgent as agent {
 	use adultUpdate as event module.
 }
 
+define kidAgent as agent {
+	use kidInit as init module.
+	use kid as main module.
+	use kidUpdate as event module.
+}
+
 define tickerAgent as agent {
 	use tickerInit as init module.
 	use ticker as main module.
@@ -22,7 +28,8 @@ launchpolicy {
    when * launch 
    	tickerAgent
 	, envAgent
-   	,adultAgent with name=a1
-%   	,adultAgent with name=a2
+   	, adultAgent with name=a1
+   	, adultAgent with name=a2
+	%, kidAgent with name=k1
    	.
 }

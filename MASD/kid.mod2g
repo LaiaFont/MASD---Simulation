@@ -1,0 +1,13 @@
+use common as knowledge.
+use printText as actionspec.
+
+exit=nogoals.
+
+module kid {
+	if
+		goal(keep_calm), bel(tick, my_name(N), concat_strings(N, "Quietly ", "playing!!!", M))
+	then
+		delete(tick)
+		+ printText(M).
+		
+}

@@ -6,21 +6,23 @@ module adultUpdate {
 	% Waiting to be informed of the initial position
 	if 
 		goal(wait_for_location)
-		,(tickerAgent).sent(initial_place(Pos))
+		,(tickerAgent).sent(initial_place(N, Pos))
+		, bel(concat_strings(N, "Initially at ", Pos, M))
 	then
 		adopt(keep_calm) 
 		+ drop(wait_for_location) 
-		%+ adopt(scape) 
 		+ insert(my_place(Pos))
-		+ printText(Pos) 
-		%+ (env).send(entering(adult, Pos))
+		+ insert(my_status(resting))
+		+ insert(my_name(N))
+		+ printText(M) 
 		.
 		
 	% Alarm heard
 	if 
-		(envAgent).sent(emergency_alarm)
+		(envAgent).sent(emergency_alarm),
+		bel(my_name(N), concat_strings(N, "I've heard an alarm. I'll better go out", "", M))
 	then
-		printText("There is an alarm!!") +
+		printText(M) +
 		drop(keep_calm) 
 		% The goal is at top level
 		+ self.adopt(scape)
@@ -33,19 +35,51 @@ module adultUpdate {
 		insert(tick).
 		
 	% Ask for status of room to environment
+	if 
+		bel(query_status(R))
+	then
+		(envAgent).send(query_status(R))
+		+ delete(query_status(R)).
+		
+	% Status of a room received from environment
 	if
 		(envAgent).sent(status(R, N))
 		, bel(status(R, O))
 	then {
 		if true then delete(status(R, O)) + insert(status(R, N)).
 		% Recalculate my route if the next step is not clear
-		if bel(going(C, R)), not (bel(status(R, clear))) then printText("Next step not clear") + delete(going(C, R)).
+		if 
+			bel(going(C, R)), 
+			not(bel(status(R, clear)))
+			,bel(my_name(Me), concat_strings(Me, "Next step is not clear, I'll better look for another itinerary... ", "", M))
+		then 
+			printText(M) + delete(going(C, R)).
 	}
 	
-	% Status of a room received from environment
-	if 
-		bel(query_status(R))
+		
+	% Ask who is in the same room
+	if
+		bel(who_is_here, my_place(P))
 	then
-		(envAgent).send(query_status(R))
-		+ delete(query_status(R)).
+		(locationChannel).send(hello(P)).
+		
+	% Receive statuses of people in the same room
+	if
+		bel(my_place(P)),
+		(Ag).sent(adult_at(P, S))
+	then 
+		% TODO: Remove all old positions of Ag 
+		insert(adult_at(Ag, P, S))
+		.
+		
+	% Respond who is in the same room
+	% Only respond if I'm not the requester 
+	% and I'm in the same place 
+	if
+		(Ag).sent(hello(P)),
+		bel(my_place(P), my_status(S)),
+		not(bel(my_name(Ag)))
+	then
+		(Ag).send(adult_at(P, S))
+		.
 }

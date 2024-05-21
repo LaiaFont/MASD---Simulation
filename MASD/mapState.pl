@@ -1,5 +1,3 @@
-:- dynamic blocked/1.
-
 status(r1, clear).
 status(r2, clear).
 status(r3, clear).

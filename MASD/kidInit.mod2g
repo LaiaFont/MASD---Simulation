@@ -1,9 +1,8 @@
 use common as knowledge.
 use printText as actionspec.
 use personGoals as goals.
-use mapState as beliefs.
 
-module adultInit {
+module kidInit {
 	if 
 		true
 	then

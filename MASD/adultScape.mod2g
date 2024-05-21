@@ -7,30 +7,27 @@ exit=nogoals.
 
 module adultScape {
 	if 
-		bel(my_place(E), exit(E)) 
+		bel(my_place(E), exit(E), my_name(N), concat_strings(N, "Thanks God, I managed to scape. Bye!", "", M)) 
 	then 
-		printText("Exit found. Bye!") +
-		print("Exit found. Bye!") + 
+		printText(M) +
 		drop(scape).
 			
 	if 
-		not(bel(going(_,_))), bel(my_place(X), path_to_exit([X, N| _]))
+		not(bel(going(_,_))), bel(my_place(X), path_to_exit([X, N| _]), my_name(Me), concat_strings(Me, "Planing to go to ", N, M))
 	then 
-		print("Going to") + print(N) + 
-		%(env).send(leaving(adult, X)) +
+		printText(M) +
 		insert(query_status(N)) +
 		insert(going(X, N)).
 
 	if 
-		bel(tick),  
-		bel(going(X, Y))
+		bel(tick, going(X, Y), my_name(N), concat_strings(N, Y, " reached", M))
 	then
 		delete(tick)
 		+ delete(going(X, Y)) 
 		+ delete(my_place(X)) 
-		+ printText(Y)
+		+ printText(M)
 		+ insert(my_place(Y))
-		%+ (env).send(entering(adult, Y)).	
+		+ insert(who_is_here)
 		. 
 	
 }
