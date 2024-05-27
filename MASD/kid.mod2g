@@ -5,7 +5,7 @@ exit=nogoals.
 
 module kid {
 	if
-		goal(keep_calm), bel(tick, my_name(N), concat_strings(N, "Quietly ", "playing!!!", M))
+		goal(keep_calm), bel(tick, my_name(N), concat_strings(N, "Cheerfully ", "playing!!!", M))
 	then
 		delete(tick)
 		+ printText(M).

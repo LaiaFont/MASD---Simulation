@@ -1,0 +1,19 @@
+use common as knowledge.
+use printText as actionspec.
+
+exit=always.
+
+
+module adultRecomputeStatus {
+	if bel(my_place(P), my_name(N)) then 
+	{
+		% If there are children without surveillance, take them
+		forall bel(kid_at(K, P, playing)) do {
+			if true then 
+				delete(kid_at(K, P, playing)) + 
+				insert(guiding(K)) +
+				% The the kid he or she is going with me
+				(K).send(guiding_you).
+		}
+	}
+}

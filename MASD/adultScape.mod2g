@@ -1,11 +1,18 @@
 use common as knowledge.
 use map as knowledge.
 use printText as actionspec.
+use adultRecomputeStatus as module.
+use adultMove as module.
 
 focus=select.
 exit=nogoals.
 
 module adultScape {
+	if 
+		bel(recompute_status)
+	then
+		adultRecomputeStatus.
+		
 	if 
 		bel(my_place(E), exit(E), my_name(N), concat_strings(N, "Thanks God, I managed to scape. Bye!", "", M)) 
 	then 
@@ -20,14 +27,8 @@ module adultScape {
 		insert(going(X, N)).
 
 	if 
-		bel(tick, going(X, Y), my_name(N), concat_strings(N, Y, " reached", M))
+		bel(tick, going(_, _))
 	then
-		delete(tick)
-		+ delete(going(X, Y)) 
-		+ delete(my_place(X)) 
-		+ printText(M)
-		+ insert(my_place(Y))
-		+ insert(who_is_here)
-		. 
+		adultMove.
 	
 }

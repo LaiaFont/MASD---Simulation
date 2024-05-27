@@ -1,0 +1,24 @@
+use common as knowledge.
+use printText as actionspec.
+
+exit=always.
+order=linearall.
+
+module adultMove {
+	% Do my move
+	if 
+		bel(going(X, Y), my_name(N), concat_strings(N, Y, " reached", M))
+	then
+		delete(tick)
+		+ delete(going(X, Y)) 
+		+ delete(my_place(X)) 
+		+ printText(M)
+		+ insert(my_place(Y))
+		+ insert(who_is_here)
+		.
+	
+	% Move my guided kids
+	forall bel(guiding(K)) do {
+		if bel(my_place(P)) then (K).send(go_to(P)).
+	} 
+}

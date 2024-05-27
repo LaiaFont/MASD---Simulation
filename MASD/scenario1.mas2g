@@ -30,6 +30,7 @@ launchpolicy {
 	, envAgent
    	, adultAgent with name=a1
    	, adultAgent with name=a2
-	%, kidAgent with name=k1
+	, kidAgent with name=k1
+	, kidAgent with name=k2
    	.
 }

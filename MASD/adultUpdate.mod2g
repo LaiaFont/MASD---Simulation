@@ -55,22 +55,44 @@ module adultUpdate {
 		then 
 			printText(M) + delete(going(C, R)).
 	}
-	
 		
 	% Ask who is in the same room
 	if
 		bel(who_is_here, my_place(P))
 	then
-		(locationChannel).send(hello(P)).
+		delete(who_is_here) +
+		(locationChannel).send(hello(P))
+		.
 		
-	% Receive statuses of people in the same room
+	% Receive statuses of adults in the same room
 	if
 		bel(my_place(P)),
 		(Ag).sent(adult_at(P, S))
-	then 
-		% TODO: Remove all old positions of Ag 
-		insert(adult_at(Ag, P, S))
+	then {
+		% Remove all old states of Ag 
+		forall bel(adult_at(Ag, Op, Os)) do {if true then delete(adult_at(Ag,Op,Os)).}
+		% Set the new state
+		if true then insert(adult_at(Ag, P, S)) +
+		insert(recompute_status)
 		.
+	}
+
+	% Receive statuses of kids in the same room
+	% If I find "new" kids, maybe I have to do something with them
+	if
+		bel(my_place(P)),
+		(Ag).sent(kid_at(P, S)),
+		not (bel(guiding(Ag))),
+		bel(my_name(Me), concat_strings(Me, "There is a child in this room: ", Ag, M))
+	then {
+		% Remove all old states of Ag 
+		forall bel(kid_at(Ag, Op, Os)) do {if true then delete(kid_at(Ag,Op,Os)).}
+		% Set the new state
+		if true then insert(kid_at(Ag, P, S)) +
+		printText(M) +
+		insert(recompute_status)
+		.
+	}
 		
 	% Respond who is in the same room
 	% Only respond if I'm not the requester 
@@ -78,7 +100,7 @@ module adultUpdate {
 	if
 		(Ag).sent(hello(P)),
 		bel(my_place(P), my_status(S)),
-		not(bel(my_name(Ag)))
+		not(bel(my_name(Ag))) 
 	then
 		(Ag).send(adult_at(P, S))
 		.
