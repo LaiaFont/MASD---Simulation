@@ -2,17 +2,40 @@ use common as knowledge.
 use printText as actionspec.
 
 exit=always.
+order=linearall.
 
 module adultRecomputeStatus {
 	if bel(my_place(P), my_name(N)) then 
 	{
-		% If there are children without surveillance, take them
-		forall bel(kid_at(K, P, playing)) do {
-			if true then 
-				delete(kid_at(K, P, playing)) + 
-				insert(guiding(K)) +
-				% The the kid he or she is going with me
-				(K).send(guiding_you).
+		% If there is a kid here, and I'm not guiding anyone, take him
+		if 
+			bel(kid_at(K, P, playing)),
+			not(bel(guiding(_))),
+			bel(concat_strings(N, "I'll take care of ", K, M))
+		then
+			insert(guiding(K)) + 
+			delete(kid_at(K, P, playing)) +
+			(K).send(guiding_you) +
+			printText(M)
+			.
+
+		% If there is a kid here, and I'm guiding another, stay with him
+		if 
+			bel(kid_at(K, P, playing)),
+			bel(guiding(_)),
+			bel(concat_strings(N, "I have to stay with ", K, M))
+		then {
+			if bel(going(P, T)) then delete(going(P, T)).
+			if true then printText(M).
 		}
+					
+		% If there are children without surveillance, take them
+%		forall bel(kid_at(K, P, playing)) do {
+%			if true then 
+%				delete(kid_at(K, P, playing)) + 
+%				insert(guiding(K)) +
+%				% The the kid he or she is going with me
+%				(K).send(guiding_you).
+%		}
 	}
 }

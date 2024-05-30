@@ -11,6 +11,7 @@ module adultScape {
 	if 
 		bel(recompute_status)
 	then
+		delete(recompute_status) +
 		adultRecomputeStatus.
 		
 	if 
@@ -19,8 +20,24 @@ module adultScape {
 		printText(M) +
 		drop(scape).
 			
+	% If there are children not guided here I must stay
 	if 
-		not(bel(going(_,_))), bel(my_place(X), path_to_exit([X, N| _]), my_name(Me), concat_strings(Me, "Planing to go to ", N, M))
+		not(bel(going(_,_))),
+		bel(my_place(X)), 
+		bel(kid_at(_, X, playing)), 
+		bel(my_name(Me), concat_strings(Me, "Planing to stay at ", X, M))
+	then 
+		printText(M) +
+		insert(query_status(X)) +
+		insert(going(X, X)).
+
+	% If there aren't children playing, I can move
+	if 
+		not(bel(going(_,_))),
+		bel(my_place(X)), 
+		not(bel(kid_at(_, X, playing))), 
+		bel(path_to_exit([X, N| _]),
+		my_name(Me), concat_strings(Me, "Planing to go to ", N, M))
 	then 
 		printText(M) +
 		insert(query_status(N)) +

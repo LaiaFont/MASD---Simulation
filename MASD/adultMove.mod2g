@@ -7,7 +7,9 @@ order=linearall.
 module adultMove {
 	% Do my move
 	if 
-		bel(going(X, Y), my_name(N), concat_strings(N, Y, " reached", M))
+		bel(going(X, Y)), 
+		%not(bel(X is not Y)), 
+		bel(my_name(N), concat_strings(N, Y, " reached", M))
 	then
 		delete(tick)
 		+ delete(going(X, Y)) 

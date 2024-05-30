@@ -2,7 +2,7 @@ use common as knowledge.
 use printText as actionspec.
 use map as knowledge.
 
-% Kid statuses: playing, surveilled, guided
+% Kid statuses: playing, guided
 
 module kidUpdate {
 	% Waiting to be informed of the initial position
@@ -24,24 +24,23 @@ module kidUpdate {
 		(_).sent(tick)  
 	then
 		insert(tick).
-		
-	% TODO: If fire in the same room, random move if no adult in the same location
 	
 	% Respond who is in the same room
-	% Only respond if I'm not the requester 
-	% and I'm in the same place 
-	if
-		(Ag).sent(hello(P)),
-		bel(my_place(P), my_status(S)),
-		not(bel(my_name(Ag)))
-	then
-		(Ag).send(kid_at(P, S))
-		.
+	% and I'm in the same place
+	forall (Ag).sent(hello(P)) do {
+		if 
+			bel(my_place(P), my_status(S)),
+			not(bel(obey(Ag)))
+		then
+			(Ag).send(kid_at(P, S))
+			.
+	}
 		
 	% Someone is taking care of me
 	if
 		(Ag).sent(guiding_you),
-		bel(my_status(S), my_name(Me), concat_strings(Me, "Following ", Ag, M))
+		bel(my_status(S)),
+		bel(my_name(Me), concat_strings(Me, "Following ", Ag, M))
 	then
 		delete(my_status(S)) +
 		insert(my_status(guided)) +

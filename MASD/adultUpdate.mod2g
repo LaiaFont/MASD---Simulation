@@ -59,10 +59,16 @@ module adultUpdate {
 	% Ask who is in the same room
 	if
 		bel(who_is_here, my_place(P))
-	then
-		delete(who_is_here) +
-		(locationChannel).send(hello(P))
-		.
+	then {
+		% First forget previous beliefs on who is here
+		forall bel(kid_at(K, P, S)) do {if true then delete(kid_at(K, P, S)).}
+		forall bel(adult_at(A, P, S)) do {if true then delete(adult_at(A, P, S)).}
+		
+		% Then ask who is here
+		if true then
+			delete(who_is_here) +
+			(locationChannel).send(hello(P)).
+	}
 		
 	% Receive statuses of adults in the same room
 	if
@@ -79,29 +85,32 @@ module adultUpdate {
 
 	% Receive statuses of kids in the same room
 	% If I find "new" kids, maybe I have to do something with them
-	if
-		bel(my_place(P)),
-		(Ag).sent(kid_at(P, S)),
-		not (bel(guiding(Ag))),
-		bel(my_name(Me), concat_strings(Me, "There is a child in this room: ", Ag, M))
-	then {
-		% Remove all old states of Ag 
-		forall bel(kid_at(Ag, Op, Os)) do {if true then delete(kid_at(Ag,Op,Os)).}
-		% Set the new state
-		if true then insert(kid_at(Ag, P, S)) +
-		printText(M) +
-		insert(recompute_status)
-		.
+	forall (Ag).sent(kid_at(P, playing)) do {
+		if
+			bel(my_place(P)),
+			not (bel(guiding(Ag))),
+			bel(my_name(Me), concat_strings(Me, "There is lonely child in this room: ", Ag, M))
+		then {
+			% Remove all old states of Ag 
+			forall bel(kid_at(Ag, Op, Os)) do {if true then delete(kid_at(Ag,Op,Os)).}
+			% Set the new state
+			if true then 
+				insert(kid_at(Ag, P, playing)) +
+				printText(M) +
+				insert(recompute_status)
+				.
+		}
 	}
 		
 	% Respond who is in the same room
 	% Only respond if I'm not the requester 
-	% and I'm in the same place 
-	if
-		(Ag).sent(hello(P)),
-		bel(my_place(P), my_status(S)),
-		not(bel(my_name(Ag))) 
-	then
-		(Ag).send(adult_at(P, S))
-		.
+	% and I'm in the same place
+	forall (Ag).sent(hello(P)) do { 
+		if	
+			bel(my_place(P), my_status(S)),
+			not(bel(my_name(Ag))) 
+		then
+			(Ag).send(adult_at(P, S))
+			.
+	}
 }
