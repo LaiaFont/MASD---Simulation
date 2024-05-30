@@ -2,11 +2,6 @@ use tickerKnowledge as knowledge.
 use printText as actionspec.
 
 module tickerUpdate {
-%	if 
-%		percept(timer(ticker, _)), bel(set_position(Ag, Pos))
-%	then 
-%		printText("Send position") + (Ag).send(my_place(Pos)) + delete(set_position(Ag, Pos)).
-	
 	if 
 		percept(timer(ticker, _)), 
 		bel(not_initialized) 

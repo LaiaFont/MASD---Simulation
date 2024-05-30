@@ -9,7 +9,6 @@ path_to_exit([Room, Exit]) :-
 
 path_to_exit([Room, Next | Path]) :-
     navigable(Room, Next),
-    % \+ member(Room, Path),   
     path_to_exit([Next | Path]).
 
 % The map

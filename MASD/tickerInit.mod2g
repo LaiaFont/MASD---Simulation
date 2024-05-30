@@ -9,5 +9,3 @@ module tickerInit {
 		+ insert(not_initialized)
 		.
 }
-
- % + insert(set_position(scp1, kitchen)) + insert(set_position(scp2, hallway)).

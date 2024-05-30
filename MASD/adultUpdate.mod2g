@@ -101,10 +101,12 @@ module adultUpdate {
 		if
 			bel(my_place(P)),
 			not (bel(guiding(Ag))),
-			bel(my_name(Me), concat_strings(Me, "There is lonely child in this room: ", Ag, M))
+			bel(my_name(Me), concat_strings(Me, "There is a lonely child in this room: ", Ag, M))
 		then {
 			% Remove all old states of Ag 
-			forall bel(kid_at(Ag, Op, Os)) do {if true then delete(kid_at(Ag,Op,Os)).}
+			forall bel(kid_at(Ag, Op, Os)) do {
+				if true then delete(kid_at(Ag, Op, Os)).
+			}
 			% Set the new state
 			if true then 
 				insert(kid_at(Ag, P, playing)) +

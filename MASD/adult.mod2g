@@ -15,11 +15,8 @@ module adult {
 		adultScape.
 				
 	if
-		goal(keep_calm) %, bel(tick)
+		goal(keep_calm) 
 	then
 		adultKeepCalm.
-		%delete(tick)
-		%+ printText("Quietly reading"). 
-		%%+insert(keep_calm).
 				
 }

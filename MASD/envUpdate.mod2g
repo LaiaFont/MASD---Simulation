@@ -9,8 +9,11 @@ module envUpdate {
 		if bel(curr_tick(C), N is C + 1)
 		then {
 			if true then delete(curr_tick(C)) + insert(curr_tick(N)).
-			forall bel( fire(R, C)) do {if bel(concat_strings("ENV", "Fire at ", R, M)) then printText(M) + delete(status(R, clear)) + insert(status(R, fire)).}
-			if bel(fire_alarm(C), concat_strings("ENV", "Emergency!!! An alarm went off", "", M)) then printText(M) + (emergencyChannel).send(emergency_alarm).
+			forall bel( fire(R, C)) do {
+				if bel(concat_strings("ENV", "Fire at ", R, M)) then printText(M) + delete(status(R, clear)) + insert(status(R, fire)).
+			}
+			if bel(fire_alarm(C), concat_strings("ENV", "Emergency!!! An alarm went off", "", M)) 
+			then printText(M) + (emergencyChannel).send(emergency_alarm).
 		}
 	}
 		
