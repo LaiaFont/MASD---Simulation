@@ -31,7 +31,7 @@ launchpolicy {
    	, adultAgent with name=a1
    	, adultAgent with name=a2
    	, adultAgent with name=a3
-   	%, adultAgent with name=a4
+   	, adultAgent with name=a4
 	, kidAgent with name=k1
 	, kidAgent with name=k2
 	, kidAgent with name=k3

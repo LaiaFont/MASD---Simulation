@@ -14,8 +14,5 @@ module envUpdate {
 		}
 	}
 		
-	if
-		(Ag).sent(query_status(R)), bel(status(R, S))
-	then
-		(Ag).send(status(R, S)).
+	forall (Ag).sent(query_status(R)), bel(status(R, S)) do {if true then (Ag).send(status(R, S)).}
 }

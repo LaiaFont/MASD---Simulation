@@ -5,3 +5,7 @@ initial_place(a4, r0).
 initial_place(k1, r4).
 initial_place(k2, r5).
 initial_place(k3, r5).
+courage(a1, 1).
+courage(a2, 2).
+courage(a3, 3).
+courage(a4, 4).

@@ -16,6 +16,12 @@ module adultUpdate {
 		+ insert(my_name(N))
 		+ printText(M) 
 		.
+	
+	% Update my courange
+	if 
+		(tickerAgent).sent(courage(C))
+	then
+		insert(my_courage(C)).
 		
 	% Alarm heard
 	if 
@@ -66,6 +72,7 @@ module adultUpdate {
 		
 		% Then ask who is here
 		if true then
+			delete(braver_here) +
 			delete(who_is_here) +
 			(locationChannel).send(hello(P)).
 	}
@@ -73,14 +80,19 @@ module adultUpdate {
 	% Receive statuses of adults in the same room
 	if
 		bel(my_place(P)),
-		(Ag).sent(adult_at(P, S))
+		(Ag).sent(adult_at(P, S, OC))
 	then {
 		% Remove all old states of Ag 
 		forall bel(adult_at(Ag, Op, Os)) do {if true then delete(adult_at(Ag,Op,Os)).}
 		% Set the new state
-		if true then insert(adult_at(Ag, P, S)) +
-		insert(recompute_status)
+		if true then 
+			insert(adult_at(Ag, P, S)) +
+			insert(recompute_status)
 		.
+		% Check if the other is more courageous
+		if bel(my_courage(MC), MC < OC) then
+			insert(braver_here)
+		.  
 	}
 
 	% Receive statuses of kids in the same room
@@ -107,10 +119,10 @@ module adultUpdate {
 	% and I'm in the same place
 	forall (Ag).sent(hello(P)) do { 
 		if	
-			bel(my_place(P), my_status(S)),
+			bel(my_place(P), my_status(S), my_courage(C)),
 			not(bel(my_name(Ag))) 
 		then
-			(Ag).send(adult_at(P, S))
+			(Ag).send(adult_at(P, S, C))
 			.
 	}
 }

@@ -4,7 +4,7 @@
 :- dynamic tick/0.
 % Movement related predicates
 :- dynamic my_place/1, going/2.
-% Askings
+% Requests
 :- dynamic query_status/1, who_is_here/0.
 % People at places and statuses
 %:- dynamic adult_at/2, kid_at/2. %Location, State
@@ -12,9 +12,10 @@
 % People status
 :- dynamic my_status/1.
 % Management of kids 
-:- dynamic guiding/1, total_guiding/1.
-:- dynamic kids_here/1.
+:- dynamic guiding/1.
 :- dynamic recompute_status/0.
+% Courage
+:- dynamic my_courage/1, braver_here/0. %Name, Location, Courage
 
 % Goals
 :- dynamic keep_calm/0, scape/0, wait_for_location/0, obey/1.

@@ -19,23 +19,16 @@ module adultRecomputeStatus {
 			printText(M)
 			.
 
-		% If there is a kid here, and I'm guiding another, stay with him
+		% If there is a kid here, and I'm guiding another, stay with him unless someone braver is also here
 		if 
 			bel(kid_at(K, P, playing)),
 			bel(guiding(_)),
+			not(bel(braver_here)),
 			bel(concat_strings(N, "I have to stay with ", K, M))
 		then {
 			if bel(going(P, T)) then delete(going(P, T)).
 			if true then printText(M).
 		}
 					
-		% If there are children without surveillance, take them
-%		forall bel(kid_at(K, P, playing)) do {
-%			if true then 
-%				delete(kid_at(K, P, playing)) + 
-%				insert(guiding(K)) +
-%				% The the kid he or she is going with me
-%				(K).send(guiding_you).
-%		}
 	}
 }

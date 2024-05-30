@@ -11,8 +11,9 @@ module tickerUpdate {
 		percept(timer(ticker, _)), 
 		bel(not_initialized) 
 	then {
-		forall bel( initial_place(Ag, Loc)) do (Ag).send(initial_place(Ag, Loc))
-		+ delete(not_initialized)
+		forall bel( initial_place(Ag, Loc)) do {if true then (Ag).send(initial_place(Ag, Loc)).}
+		forall bel( courage(Ag, C)) do {if true then (Ag).send(courage(C)).}
+		if true then delete(not_initialized)
 		.
 	}
 	
